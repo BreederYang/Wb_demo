@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mybaitspuls.demo.mapper.DynamicMapper">
+    <insert id="createDynamic" parameterType="com.mybaitspuls.demo.entity.Dynamic" >
+        INSERT INTO wb_dynamic
+        (u_id,u_name,context,image_id,create_time,like_count)
+        VALUES (
+          #{uid},#{uname},#{context},#{imageId},now(),0
+        )
+    </insert>
+    <delete id="deleltDynamic" parameterType="int">
+        DELETE FROM wb_dynamic WHERE id = #{id}
+    </delete>
+    <resultMap id="DynamicUserPictrueMap" type="com.mybaitspuls.demo.entity.DynamicUserPicturePo" autoMapping="true">
+        <id column="id" property="id" />
+        <association property="user" javaType="com.mybaitspuls.demo.entity.User" autoMapping="false">
+            <id column="id" property="id"/>
+            <result column="username" property="username"/>
+            <result column="password" property="password"/>
+            <result column="sex" property="sex"/>
+            <result column="portrait" property="portrait"/>
+            <result column="createTime" property="createTime"/>
+            <result column="email" property="email"/>
+<!--private Integer id;
+   private String portrait;
+   private String username;
+   private String password;
+   private Integer sex;
+   private String createTime;
+   private String email;-->
+        </association>
+        <association property="picture" javaType="com.mybaitspuls.demo.entity.Picture" autoMapping="true">
+            <id column="id" property="id"/>
+            <result column="uuid" property="uuid"/>
+            <result column="name" property="name"/>
+        </association>
+    </resultMap>
+    <select id="selectDynamicByTime" parameterType="int" resultMap="DynamicUserPictrueMap">
+        SELECT * FROM wb_dynamic dy,wb_user u,wb_picture p
+        WHERE dy.`u_id` = u.`id` AND u.`portrait` = p.`id`
+        ORDER BY create_time DESC
+        LIMIT #{pageNumber},#{viewNumber}
+    </select>
+</mapper>

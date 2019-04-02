@@ -1,0 +1,39 @@
+# DataSource Config
+server:
+  port: 8080
+  servlet:
+    context-path: /
+spring:
+  resources:
+    static-locations: file:/home/hadoop,classpath:/resources
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://39.97.132.220:3306/wb?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&serverTimezone=GMT%2B8&useSSL=false
+    username: root
+    password: TPStudio2017
+  mvc:
+    view:
+      prefix: /jsp/
+      suffix: .jsp
+#mybatis:
+#  type-aliases-package: com.mybaitspuls.demo.entity
+#  mapper-locations: classpath:/mapper/*.xml
+###################  mybatis-plus配置  ###################
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  typeAliasesPackage: com.mybaitspuls.demo.entity
+  global-config:
+    id-type: 1  #1:数据库ID自增   2:用户输入id   3:全局唯一id(IdWorker)   4:全局唯一ID(uuid)
+    db-column-underline: true
+    refresh-mapper: true
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true #配置的缓存的全局开关
+    lazyLoadingEnabled: true #延时加载的开关
+    multipleResultSetsEnabled: true #开启的话，延时加载一个属性时会加载该对象全部属性，否则按需加载属性
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印sql语句,调试用
+logging:
+  level:
+    root: info
+  file: springBootWB.log
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mybaitspuls.demo.mapper.CommentMapper">
+    <select id="selectCommentByDid" parameterType="int" resultType="com.mybaitspuls.demo.entity.Comment">
+        SELECT * FROM wb_comment WHERE d_id = #{did}
+    </select>
+    <insert id="addCommentByDid" parameterType="com.mybaitspuls.demo.entity.Comment">
+        INSERT INTO wb_comment (d_id,u_id,u_name,context,create_time,like_count)
+        VALUES (#{did},#{uid},#{uName},#{context},now(),0)
+    </insert>
+</mapper>
